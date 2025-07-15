@@ -8,51 +8,61 @@ Go言語（Golang）のgRPCおよびDDD（ドメイン駆動設計）による�
   
 ```
 /src
-└── /internal
-    ├── /application（アプリケーション層）
-    |    └── usecase（ユースケース層）
-    |
-    ├── /domain（ドメイン層）
-    |    ├── model（ドメインモデルの定義。ビジネスロジックは可能な限りドメインに集約させる。）
-    |    ├── （仮）repository（リポジトリのインターフェース定義）
-    |    └── （仮）service（外部サービスのインターフェース定義）
-    |
-    ├── /infrastructure（インフラストラクチャ層）
-    |    ├── （仮）database（データベース設定）
-    |    ├── logger（ロガーの実装。インターフェース部分はユースケース層で定義。）
-    |    ├── （仮）persistence（リポジトリの実装。DB操作による永続化層。）
-    |    ├── （仮）cache（キャッシュを含めたリポジトリの実装。インターフェースはリポジトリと同一。）
-    |    └── （仮）externalapi（外部サービスの実装）
-    |
-    ├── /presentation（プレゼンテーション層）
-    |    ├── server（サーバー層）
-    |    ├── interceptor（インターセプターの定義）
-    |    └── router（ルーター設定。レジストリのコントローラーを利用して設定する。）
-    |
-    └── /registry（レジストリ層。依存注入によるサーバーのインスタンスをコントローラーにまとめる。）
+├── /internal
+|   ├── /application（アプリケーション層）
+|   |    └── usecase（ユースケース層）
+|   |
+|   ├── /domain（ドメイン層）
+|   |    ├── model（ドメインモデルの定義。ビジネスロジックは可能な限りドメインに集約させる。）
+|   |    ├── （仮）repository（リポジトリのインターフェース定義）
+|   |    └── （仮）service（外部サービスのインターフェース定義）
+|   |
+|   ├── /infrastructure（インフラストラクチャ層）
+|   |    ├── （仮）database（データベース設定）
+|   |    ├── logger（ロガーの実装。インターフェース部分はユースケース層で定義。）
+|   |    ├── （仮）persistence（リポジトリの実装。DB操作による永続化層。）
+|   |    ├── （仮）cache（キャッシュを含めたリポジトリの実装。インターフェースはリポジトリと同一。）
+|   |    └── （仮）externalapi（外部サービスの実装）
+|   |
+|   ├── /presentation（プレゼンテーション層）
+|   |    ├── server（サーバー層）
+|   |    ├── interceptor（インターセプターの定義）
+|   |    └── router（ルーター設定。レジストリのコントローラーを利用して設定する。）
+|   |
+|   └── /registry（レジストリ層。依存注入によるサーバーのインスタンスをコントローラーにまとめる。）
+|
+├── /pb（protoファイルから生成したProtocol Buffersのコード）
+|
+└── /proto（スキーマ定義）
 ```
 > <span style="color:red">※（仮）のものは将来的に追加する想定の例</span>  
   
 </br>
   
 ### APIの作成手順  
-  1. ドメインの定義  
+  1. スキーマ定義  
+    protoファイルでAPIのスキーマを定義。  
+  
+  2. Protocol Buffersのコード生成  
+    Bufを利用し、protoファイルからProtocol Buffersのコードを生成。  
+  
+  3. ドメインの定義  
     ドメインを新規追加、または既存のドメインにビジネスロジックの追加。  
     永続化が必要ならリポジトリの定義、外部サービスとの連携が必要ならサービスの定義を追加。 
   
-  2. リポジトリやサービスの実装  
+  4. リポジトリやサービスの実装  
     リポジトリやサービスのインターフェース定義を追加した場合、インフラストラクチャ層に実装を定義。  
   
-  3. ユースケースの定義  
-    ドメインやリポジトリを用いてユースケースにビジネスロジックを定義。
+  5. ユースケースの定義  
+    PBのスキーマ定義、ドメインやリポジトリを用いてユースケースにビジネスロジックを定義。
   
-  4. サーバーの定義  
+  6. サーバーの定義  
     ユースケースを用いてサーバーの定義。  
   
-  5. レジストリ登録  
+  7. レジストリ登録  
     リポジトリ、ユースケース、サーバーのインスタンスをレジストリのコントローラーに登録。  
   
-  6. ルーター設定の追加  
+  8. ルーター設定の追加  
     レジストリを用いてルーター設定を追加。
   
 <br />
@@ -125,6 +135,21 @@ docker compose exec grpc go test -v -coverprofile=internal/coverage.out $(docker
 docker compose exec grpc go tool cover -html=internal/coverage.out -o=internal/coverage.html
 ```  
 > <span style="color:red">※src/internal/coverage.htmlをブラウザで開いて確認して下さい。</span>  
+  
+<br />
+  
+## .protoファイルからProtocol Buffersのコード生成
+ローカルサーバー起動中に以下のコマンドを実行可能です。  
+  
+・buf.yamlから依存関係のインストール（buf.lockを生成）  
+```
+docker compose exec grpc buf dep update
+```  
+  
+・buf.gen.yamlからpbファイルを生成
+```
+docker compose exec grpc buf generate
+```  
   
 <br />
   
