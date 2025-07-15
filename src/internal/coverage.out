@@ -1,0 +1,17 @@
+mode: set
+go-grpc-domain/internal/domain/chat/chat_model.go:13.38,17.2 1 1
+go-grpc-domain/internal/domain/chat/chat_model.go:19.37,21.2 1 1
+go-grpc-domain/internal/domain/chat/chat_model.go:23.37,25.2 1 1
+go-grpc-domain/internal/domain/chat/chat_model.go:27.40,30.2 2 1
+go-grpc-domain/internal/application/usecase/chat/chat.go:18.55,22.2 1 1
+go-grpc-domain/internal/application/usecase/chat/chat_bidirectional.go:16.105,20.6 2 1
+go-grpc-domain/internal/application/usecase/chat/chat_bidirectional.go:20.6,22.29 2 1
+go-grpc-domain/internal/application/usecase/chat/chat_bidirectional.go:22.29,24.4 1 1
+go-grpc-domain/internal/application/usecase/chat/chat_bidirectional.go:25.3,25.17 1 1
+go-grpc-domain/internal/application/usecase/chat/chat_bidirectional.go:25.17,27.4 1 1
+go-grpc-domain/internal/application/usecase/chat/chat_bidirectional.go:30.3,30.40 1 1
+go-grpc-domain/internal/application/usecase/chat/chat_bidirectional.go:30.40,35.4 3 1
+go-grpc-domain/internal/application/usecase/chat/chat_bidirectional.go:38.3,41.64 3 1
+go-grpc-domain/internal/application/usecase/chat/chat_bidirectional.go:41.64,43.4 1 1
+go-grpc-domain/internal/presentation/server/grpc/chat/chat.go:17.15,21.2 1 1
+go-grpc-domain/internal/presentation/server/grpc/chat/chat.go:23.104,25.2 1 1
