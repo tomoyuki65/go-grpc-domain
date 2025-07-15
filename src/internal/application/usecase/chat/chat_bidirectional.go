@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"io"
 
-	pb "go-grpc-domain/pb/chat"
 	chatModel "go-grpc-domain/internal/domain/chat"
+	pb "go-grpc-domain/pb/chat"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
