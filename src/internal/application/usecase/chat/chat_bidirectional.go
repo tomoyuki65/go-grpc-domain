@@ -6,6 +6,7 @@ import (
 	"io"
 
 	pb "go-grpc-domain/pb/chat"
+	chatModel "go-grpc-domain/internal/domain/chat"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -33,7 +34,10 @@ func (u *chatUsecase) Bidirectional(stream grpc.BidiStreamingServer[pb.TextInput
 			return status.Errorf(codes.InvalidArgument, "%s", err.Error())
 		}
 
-		msg := fmt.Sprintf("Hello, %s !!", req.GetText())
+		// Chatドメインを利用してメッセージを設定
+		chat := chatModel.NewChat(req.GetText())
+		msg := fmt.Sprintf("ToUppder: %s, ToLower: %s, AddTimeNow: %s", chat.TextToUpper(), chat.TextToLower(), chat.TextAddTimeNow())
+
 		if err := stream.Send(&pb.TextOutput{Text: msg}); err != nil {
 			return err
 		}
