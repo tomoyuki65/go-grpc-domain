@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+import "validate/validate.proto";
+
+package chat;
+
+option go_package="pb/chat";
+
+message TextInput {
+  string text = 1 [(validate.rules).string.min_len = 1];
+}
+
+message TextOutput {
+  string text = 1;
+}
+
+// サンプルサービス
+service ChatService {
+  // 双方向ストリーミング（複数のリクエスト-複数のレスポンス）
+  rpc Bidirectional(stream TextInput) returns (stream TextOutput) {}
+    // Returns:
+    //   - 0 OK: TextOutputを出力
+    //   - 2 Unknown: 不明なエラー
+    //   - 3 INVALID_ARGUMENT: バリデーションエラー）
+}

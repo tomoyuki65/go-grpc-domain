@@ -1,0 +1,16 @@
+# For details on buf.yaml configuration, visit https://buf.build/docs/configuration/v2/buf-yaml
+version: v2
+# .protoファイルのパスを指定
+modules:
+  - path: proto
+# 依存関係のライブラリを指定
+deps:
+  - buf.build/envoyproxy/protoc-gen-validate:v1.2.1
+  - buf.build/googleapis/googleapis
+  - buf.build/grpc-ecosystem/grpc-gateway:v2.26.3
+lint:
+  use:
+    - STANDARD
+breaking:
+  use:
+    - FILE
