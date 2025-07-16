@@ -46,12 +46,13 @@ func TestChat_TextToLower(t *testing.T) {
 }
 
 func TestChat_TextAddTimeNow(t *testing.T) {
-	text := "Hello"
+	t.Run("現在の時間を追加", func(t *testing.T) {
+		text := "Hello"
 
-	// ChatModel作成
-	chat := NewChat(text)
+		// ChatModel作成
+		chat := NewChat(text)
 
-	// 検証
-	jst, _ := time.LoadLocation("Asia/Tokyo")
-	assert.Equal(t, fmt.Sprintf("[%s] %s", time.Now().In(jst).Format("2006-01-02 15:04:05"), text), chat.TextAddTimeNow())
+		// 検証
+		assert.Equal(t, fmt.Sprintf("[%s] %s", time.Now().Format("2006-01-02 15:04:05"), text), chat.TextAddTimeNow())
+	})
 }

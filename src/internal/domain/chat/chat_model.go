@@ -25,6 +25,5 @@ func (c *Chat) TextToLower() string {
 }
 
 func (c *Chat) TextAddTimeNow() string {
-	jst, _ := time.LoadLocation("Asia/Tokyo")
-	return fmt.Sprintf("[%s] %s", time.Now().In(jst).Format("2006-01-02 15:04:05"), c.InputText)
+	return fmt.Sprintf("[%s] %s", time.Now().Format("2006-01-02 15:04:05"), c.InputText)
 }

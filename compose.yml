@@ -16,5 +16,6 @@ services:
       - ENV
       - GRPC_PORT
       - GATEWAY_PORT
+      - TZ
     tty: true
     stdin_open: true

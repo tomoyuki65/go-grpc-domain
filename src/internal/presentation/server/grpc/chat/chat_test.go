@@ -11,6 +11,7 @@ import (
 	chatModel "go-grpc-domain/internal/domain/chat"
 	pb "go-grpc-domain/pb/chat"
 
+	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 	"google.golang.org/grpc"
@@ -51,6 +52,14 @@ func (m *mockBidirectionalStream) Send(resp *pb.TextOutput) error {
 
 func (m *mockBidirectionalStream) Context() context.Context {
 	return m.ctx
+}
+
+// 初期処理
+func init() {
+	// テスト用の環境変数ファイル「.env.testing」を読み込んで使用する。
+	if err := godotenv.Load("../../../../../.env.testing"); err != nil {
+		fmt.Println(".env.testingの読み込みに失敗しました。")
+	}
 }
 
 func TestChatServer_Bidirectional(t *testing.T) {
